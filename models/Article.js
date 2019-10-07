@@ -11,15 +11,17 @@ var ArticleSchema = new Schema({
     type: String,
     required: true
   },
-  // `summary` is required and of type String
-  summary: {
+  // `category` is required and of type String
+  category: {
     type: String,
     required: true
   },
-  // `url` is required and of type String
+  // `url` is required, of type String, and it must be unique; duplicates will be dropped.
   url: {
     type: String,
-    required: true
+    unique: true,
+    required: true,
+    dropDups: true
   },
   // `author` is required and of type String
   author: {

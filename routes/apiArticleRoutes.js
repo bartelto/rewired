@@ -24,13 +24,24 @@ module.exports = function (app) {
           .find(".card-component__description")
           .find("h2")
           .text();
-        result.summary = "This is a summary.";
+        result.category = $(this)
+          .find(".card-component__description")
+          .find(".brow-component")
+          .children()
+          .text();
         result.url = $(this)
           .find(".card-component__description")
           .children("a")
           .attr("href");
-        result.author = "This is the author.";
-        result.image = "This is an image.";
+        result.author = $(this)
+          .find(".card-component__description")
+          .find(".byline-component")
+          .find("a")
+          .text();
+        result.image = $(this)
+          .find(".card-component__image")
+          .find("img")
+          .attr("src");
 
 
         console.log(result);
