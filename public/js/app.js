@@ -1,3 +1,12 @@
+console.log("app.js loaded.");
+
+$.get("/api/articles", function(data, err) {
+  if (err) {
+    console.log(err);
+  } 
+  console.log(data);
+});
+
 // Grab the articles as a json
 $.getJSON("/articles", function(data) {
   // For each one

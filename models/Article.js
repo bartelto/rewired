@@ -11,7 +11,7 @@ var ArticleSchema = new Schema({
     type: String,
     required: true
   },
-  // `headline` is required and of type String
+  // `summary` is required and of type String
   summary: {
     type: String,
     required: true
@@ -21,7 +21,17 @@ var ArticleSchema = new Schema({
     type: String,
     required: true
   },
-  // `note` is an object that stores a Note id
+  // `author` is required and of type String
+  author: {
+    type: String,
+    required: true
+  },
+  // `image` is optional and of type String
+  image: {
+    type: String,
+    required: false
+  },
+  // `comment` is an object that stores a Note id
   // The ref property links the ObjectId to the Note model
   // This allows us to populate the Article with an associated Note
   comments: [{
