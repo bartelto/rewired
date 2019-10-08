@@ -1,0 +1,9 @@
+/* "favorite" heart */
+i { 
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: white;
+    font-size: 24px;
+    text-shadow: 0 0 15px black;
+}

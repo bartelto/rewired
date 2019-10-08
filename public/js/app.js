@@ -6,12 +6,20 @@ $.get("/api/articles", function(data, err) {
   } 
   console.log(data);
   data.forEach(article => {
-    let newArticle = $("#template").clone().removeAttr("id");
-    newArticle.find(".card-title").text(article.headline);
-    newArticle.find(".card-text").text(article.category);
-    newArticle.children("img").attr("src", article.image);
-    newArticle.children(".card-body").children(".btn-primary").attr("href", "http://www.wired.com" + article.url);
-    newArticle.appendTo("#articles");
+    let newArticle = $("#template").clone().removeAttr("id").removeAttr("hidden");
+    newArticle.find(".article-headline").text(article.headline);
+    newArticle.find(".article-category").text(article.category);
+    newArticle.find(".article-author").text(article.author);
+    newArticle.find(".card-body").children(".btn-primary").attr("href", "http://www.wired.com" + article.url);
+    if (article.image) {
+      newArticle.find("img").attr("src", article.image);
+    }
+    else {
+      newArticle.find("img").attr("hidden", true);
+    }
+
+    //newArticle.appendTo("#articles");
+    $("#articles").children(".row").append(newArticle);
   });
 });
 

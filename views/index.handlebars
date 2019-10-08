@@ -24,16 +24,21 @@
 </div>
 
 <section class="container" id="articles">
-    <!-- Add articles here -->
-    <article class="card" style="width: 18rem;" id="template">
-        <img src="..." class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-            <a href="#" target="_blank" class="btn btn-primary">Read article</a>
+    <div class="row">
+        <!-- Add articles here -->
+        <div class="col" id="template" hidden>
+            <article class="card">
+                <img src="..." class="card-img-top article-image" alt="...">
+                <i class="fas fa-heart"></i>
+                <div class="card-body">
+                    <p class="card-text article-category">Category</p>
+                    <h5 class="card-title article-headline">Headline</h5>
+                    <p class="card-text article-author">Author</p>
+                    <a href="#" target="_blank" class="btn btn-primary">Read article</a>
+                </div>
+            </article>
         </div>
-    </article>
+    </div>
 </section>
 
 <!-- Importing jQuery library -->
@@ -47,6 +52,9 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
+
+<!--Importing FontAwesome JavaScript-->
+<script src="https://kit.fontawesome.com/9d112d245b.js" crossorigin="anonymous"></script>
 
 <!--Importing custom JavaScript-->
 <script src="js/app.js"></script>
