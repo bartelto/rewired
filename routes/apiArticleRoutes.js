@@ -73,10 +73,10 @@ module.exports = function (app) {
     });
   });
 
-  // Route for getting all Articles from the db
-  app.get("/api/articlesOLD", function (req, res) {
+  // Route for getting all SAVED Articles from the db
+  app.get("/api/saved", function (req, res) {
     // Grab every document in the Articles collection
-    db.Article.find({})
+    db.Article.find( {favorite: true} )
       .then(function (dbArticle) {
         // If we were able to successfully find Articles, send them back to the client
         res.json(dbArticle);
@@ -86,6 +86,24 @@ module.exports = function (app) {
         res.json(err);
       });
   });
+
+ // Route for favoriting/unfavoriting a specific Article by id
+ app.put("/api/favorite/:id", function (req, res) {
+   console.log("favoriting article " + req.params.id);
+   console.log(req.body);
+  // Using the id passed in the id parameter, prepare a query to update the specified Article
+  db.Article.updateOne({ _id: req.params.id }, { favorite: Boolean(req.body.favorite === 'true') })
+    .then(function (dbArticle) {
+      // If we were able to successfully find an Article with the given id, send it back to the client
+      console.log("success");
+      console.log(dbArticle);
+      res.json(dbArticle);
+    })
+    .catch(function (err) {
+      // If an error occurred, send it to the client
+      res.json(err);
+    });
+});
 
   // Route for grabbing a specific Article by id, populate it with it's note
   app.get("/api/articles/:id", function (req, res) {
