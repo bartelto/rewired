@@ -89,8 +89,6 @@ module.exports = function (app) {
 
  // Route for favoriting/unfavoriting a specific Article by id
  app.put("/api/favorite/:id", function (req, res) {
-   console.log("favoriting article " + req.params.id);
-   console.log(req.body);
   // Using the id passed in the id parameter, prepare a query to update the specified Article
   db.Article.updateOne({ _id: req.params.id }, { favorite: Boolean(req.body.favorite === 'true') })
     .then(function (dbArticle) {
@@ -121,16 +119,17 @@ module.exports = function (app) {
       });
   });
 
-  // Route for saving/updating an Article's associated Note
+  // Route for saving/updating an Article's associated Comment
   app.post("/api/articles/:id", function (req, res) {
+    console.log("adding a comment");
     // Create a new note and pass the req.body to the entry
-    db.Note.create(req.body)
-      .then(function (dbNote) {
-        // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. 
+    db.Comment.create(req.body)
+      .then(function (dbComment) {
+        // If a Comment was created successfully, find one Article with an `_id` equal to `req.params.id`. 
         // Update the Article to be associated with the new Note
-        // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
+        // { new: true } tells the query that we want it to return the updated Article -- it returns the original by default
         // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
-        return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
+        return db.Article.findOneAndUpdate({ _id: req.params.id }, { $push: { comments: dbComment._id } }, { new: true });
       })
       .then(function (dbArticle) {
         // If we were able to successfully update an Article, send it back to the client
