@@ -45,13 +45,22 @@ function loadComments(id) {
         }
         console.log(data);
         data.comments.forEach(comment => {
-            console.log(comment.body);
-            let newComment = $("#comment-template").clone().removeAttr("id").removeAttr("hidden");
-            newComment.text(comment.body)
+            console.log(comment.date);
+            let newComment = $("#comment-template").clone()
+                .removeAttr("id")   
+                .removeAttr("hidden")
                 .attr("data-id", comment._id);
+            let commentDate = new Date(parseInt(comment.date));
+            console.log(commentDate.toString());
+            newComment.children("p").html(`<b>[${formatDate(commentDate)}]</b> ${comment.body}`)
+            newComment.children(".delete-comment-btn").hide();
             $("#comments-list").append(newComment);
         });
     });
+}
+
+function formatDate(date) {
+    return `${date.getMonth()}.${date.getDate()}.${1900+date.getYear()}, ${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}`;
 }
 
 $("#save-comment-btn").click(function () {
@@ -68,9 +77,9 @@ $("#save-comment-btn").click(function () {
     });
 });
 
-$(document).on("click", ".comment", function() {
+$(document).on("click", ".delete-comment-btn", function () {
     let articleId = $("#save-comment-btn").attr("data-id");
-    let commentId = $(this).attr("data-id");
+    let commentId = $(this).parent().attr("data-id");
     console.log(`comment ${commentId} clicked`);
     $.ajax({
         type: 'DELETE',
@@ -79,4 +88,12 @@ $(document).on("click", ".comment", function() {
         console.log(data);
         loadComments(articleId);
     });
+});
+
+$(document).on("mouseover", ".comment", function () {
+    $(this).children(".delete-comment-btn").show();
+});
+
+$(document).on("mouseleave", ".comment", function () {
+    $(this).children(".delete-comment-btn").hide();
 });

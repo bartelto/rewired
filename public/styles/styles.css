@@ -7,3 +7,33 @@ i {
     font-size: 24px;
     text-shadow: 0 0 15px black;
 }
+
+#comments-list {
+    padding-left: 0;
+}
+
+.comment {
+    position: relative;
+    list-style-type: none;
+    padding: 5px;
+}
+
+.comment p {
+    margin: 0;
+}
+
+
+.comment:hover { 
+    border: 1px black lightgray;
+    box-shadow: 1px 1px 5px gray;
+}
+
+.delete-comment-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: white;
+    background-color: firebrick;
+    border-radius: 5px;
+}
+
