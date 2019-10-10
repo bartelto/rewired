@@ -76,7 +76,7 @@ module.exports = function (app) {
   // Route for getting all SAVED Articles from the db
   app.get("/api/saved", function (req, res) {
     // Grab every document in the Articles collection
-    db.Article.find( {favorite: true} )
+    db.Article.find({ favorite: true })
       .then(function (dbArticle) {
         // If we were able to successfully find Articles, send them back to the client
         res.json(dbArticle);
@@ -87,28 +87,28 @@ module.exports = function (app) {
       });
   });
 
- // Route for favoriting/unfavoriting a specific Article by id
- app.put("/api/favorite/:id", function (req, res) {
-  // Using the id passed in the id parameter, prepare a query to update the specified Article
-  db.Article.updateOne({ _id: req.params.id }, { favorite: Boolean(req.body.favorite === 'true') })
-    .then(function (dbArticle) {
-      // If we were able to successfully find an Article with the given id, send it back to the client
-      console.log("success");
-      console.log(dbArticle);
-      res.json(dbArticle);
-    })
-    .catch(function (err) {
-      // If an error occurred, send it to the client
-      res.json(err);
-    });
-});
+  // Route for favoriting/unfavoriting a specific Article by id
+  app.put("/api/favorite/:id", function (req, res) {
+    // Using the id passed in the id parameter, prepare a query to update the specified Article
+    db.Article.updateOne({ _id: req.params.id }, { favorite: Boolean(req.body.favorite === 'true') })
+      .then(function (dbArticle) {
+        // If we were able to successfully find an Article with the given id, send it back to the client
+        console.log("success");
+        console.log(dbArticle);
+        res.json(dbArticle);
+      })
+      .catch(function (err) {
+        // If an error occurred, send it to the client
+        res.json(err);
+      });
+  });
 
-  // Route for grabbing a specific Article by id, populate it with it's note
+  // Route for grabbing a specific Article by id, populated with its comments
   app.get("/api/articles/:id", function (req, res) {
     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
     db.Article.findOne({ _id: req.params.id })
-      // ..and populate all of the notes associated with it
-      .populate("note")
+      // ..and populate all of the comments associated with it
+      .populate("comments")
       .then(function (dbArticle) {
         // If we were able to successfully find an Article with the given id, send it back to the client
         res.json(dbArticle);
@@ -134,6 +134,20 @@ module.exports = function (app) {
       .then(function (dbArticle) {
         // If we were able to successfully update an Article, send it back to the client
         res.json(dbArticle);
+      })
+      .catch(function (err) {
+        // If an error occurred, send it to the client
+        res.json(err);
+      });
+  });
+
+  // route for deleting a comment
+  app.delete("/api/comments/:id", function (req, res) {
+    console.log('Got a DELETE request for comment ' + req.params.id);
+    db.Comment.deleteOne({ _id: req.params.id })
+      .then(function (dbComment) {
+        // If we were able to successfully find a Comment with the given id, send it back to the client
+        res.json(dbComment);
       })
       .catch(function (err) {
         // If an error occurred, send it to the client

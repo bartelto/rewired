@@ -31,27 +31,52 @@ $(document).on("click", ".add-comment-btn", function () {
     $("#commentsModalTitle").text("Comments for " + id);
     $("#save-comment-btn").attr("data-id", id);
 
-    // GET comments for this article and populate them in the modal
-    /*$.ajax({
-      type: 'PUT',
-      url: '/api/favorite/' + id,
-      data: {favorite: !isFav} 
-    }).done(data => {
-      $(this).toggleClass("far").toggleClass("fas")
-    });*/
+    loadComments(id);
 
     $("#commentsModal").modal('show');
 });
 
+function loadComments(id) {
+    $("#comments-list").children("[id!='comment-template']").remove();
+    // GET comments for this article and populate them in the modal
+    $.get('/api/articles/' + id, function (data, err) {
+        if (err) {
+            console.log(err);
+        }
+        console.log(data);
+        data.comments.forEach(comment => {
+            console.log(comment.body);
+            let newComment = $("#comment-template").clone().removeAttr("id").removeAttr("hidden");
+            newComment.text(comment.body)
+                .attr("data-id", comment._id);
+            $("#comments-list").append(newComment);
+        });
+    });
+}
+
 $("#save-comment-btn").click(function () {
     let id = $(this).attr("data-id");
-    console.log("saving comment for article " + id);
+    console.log("saving new comment for article " + id);
 
     $.ajax({
         type: 'POST',
         url: '/api/articles/' + id,
         data: { body: $("#new-comment").val().trim() }
     }).done(data => {
+        loadComments(id);
+        $("#new-comment").val("");
+    });
+});
+
+$(document).on("click", ".comment", function() {
+    let articleId = $("#save-comment-btn").attr("data-id");
+    let commentId = $(this).attr("data-id");
+    console.log(`comment ${commentId} clicked`);
+    $.ajax({
+        type: 'DELETE',
+        url: '/api/comments/' + commentId,
+    }).done(data => {
         console.log(data);
+        loadComments(articleId);
     });
 });
