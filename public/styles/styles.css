@@ -1,4 +1,25 @@
 /* "favorite" heart */
+.jumbotron {
+    background: linear-gradient(
+        rgba(0, 0, 0, 0.45), 
+        rgba(0, 0, 0, 0.45)
+      ), url(/images/artificial-intelligence-circuit-board-computing-50711.jpg);
+    background-position: center center;
+    color: white;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Share Tech', sans-serif;
+}
+
+p, button, a {
+    font-family: 'Raleway', sans-serif;
+}
+
+.article-category {
+    text-transform: uppercase;
+}
+
 i { 
     position: absolute;
     right: 10px;
@@ -21,7 +42,6 @@ i {
 .comment p {
     margin: 0;
 }
-
 
 .comment:hover { 
     border: 1px black lightgray;

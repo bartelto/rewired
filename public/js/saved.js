@@ -5,7 +5,7 @@ $.get("/api/saved", function (data, err) {
     if (err) {
         console.log(err);
     }
-    console.log(data);
+    //console.log(data);
     data.forEach(article => {
         let newArticle = $("#template").clone().removeAttr("id").removeAttr("hidden");
         newArticle.children("article").attr("data-id", article._id);
@@ -25,7 +25,7 @@ $.get("/api/saved", function (data, err) {
 });
 
 // click event for "add comment" button
-$(document).on("click", ".add-comment-btn", function () {
+$(document).on("click", ".view-comments-btn", function () {
     console.log("comment button clicked");
     let id = $(this).closest("article").attr("data-id");
     $("#commentsModalTitle").text("Comments for " + id);
@@ -37,6 +37,7 @@ $(document).on("click", ".add-comment-btn", function () {
 });
 
 function loadComments(id) {
+    // clear all comments except for the template
     $("#comments-list").children("[id!='comment-template']").remove();
     // GET comments for this article and populate them in the modal
     $.get('/api/articles/' + id, function (data, err) {
@@ -47,7 +48,7 @@ function loadComments(id) {
         data.comments.forEach(comment => {
             console.log(comment.date);
             let newComment = $("#comment-template").clone()
-                .removeAttr("id")   
+                .removeAttr("id")
                 .removeAttr("hidden")
                 .attr("data-id", comment._id);
             let commentDate = new Date(parseInt(comment.date));
@@ -60,7 +61,7 @@ function loadComments(id) {
 }
 
 function formatDate(date) {
-    return `${date.getMonth()}.${date.getDate()}.${1900+date.getYear()}, ${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}`;
+    return `${date.getMonth()}.${date.getDate()}.${1900 + date.getYear()}, ${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}`;
 }
 
 $("#save-comment-btn").click(function () {
@@ -96,4 +97,19 @@ $(document).on("mouseover", ".comment", function () {
 
 $(document).on("mouseleave", ".comment", function () {
     $(this).children(".delete-comment-btn").hide();
+});
+
+// click event for fav heart on each article
+// all articles here are favorites, so we will be un-favoriting it here
+$(document).on("click", "i", function () {
+    let id = $(this).closest("article").attr("data-id");
+    let isFav = true;
+    $.ajax({
+        type: 'PUT',
+        url: '/api/favorite/' + id,
+        data: { favorite: !isFav }
+    }).done(data => {
+        // remove article from Favorites page
+        $(this).closest("article").remove();
+    });
 });
