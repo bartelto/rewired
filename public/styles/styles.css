@@ -1,11 +1,20 @@
-/* "favorite" heart */
-.jumbotron {
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;    
+    z-index: 1;
+    background-color: rgba(248, 249, 250, 0.8)!important;
+
+}
+
+.jumbotron {    
     background: linear-gradient(
         rgba(0, 0, 0, 0.45), 
         rgba(0, 0, 0, 0.45)
       ), url(/images/artificial-intelligence-circuit-board-computing-50711.jpg);
     background-position: center center;
     color: white;
+    margin-top: 56px;
 }
 
 h1, h2, h3, h4, h5 {
@@ -20,13 +29,23 @@ p, button, a {
     text-transform: uppercase;
 }
 
+.card {
+    margin-bottom: 1em;
+}
+
+/* "favorite" heart */
 i { 
     position: absolute;
     right: 10px;
     top: 10px;
     color: white;
     font-size: 24px;
-    text-shadow: 0 0 15px black;
+    text-shadow: 0 0 3px dimgray;
+}
+
+.read-article-btn 
+.view-comments-btn {
+    margin-bottom: 0.5em;
 }
 
 #comments-list {
@@ -35,12 +54,23 @@ i {
 
 .comment {
     position: relative;
-    list-style-type: none;
+    list-style-type: none;  
     padding: 5px;
 }
 
 .comment p {
     margin: 0;
+}
+
+.comment span {
+    color: white;
+    font-family: 'Share Tech', sans-serif;
+    background-color: gray;
+    border-radius: 0.2em;
+    padding: 0.1em 0.5em;  
+    display: inline-block;
+    text-align: center;
+    margin-right: 0.5em;
 }
 
 .comment:hover { 

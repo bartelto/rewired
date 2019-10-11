@@ -9,6 +9,7 @@ $.get("/api/saved", function (data, err) {
     data.forEach(article => {
         let newArticle = $("#template").clone().removeAttr("id").removeAttr("hidden");
         newArticle.children("article").attr("data-id", article._id);
+        newArticle.children("article").attr("data-headline", article.headline);
         newArticle.find(".article-headline").text(article.headline);
         newArticle.find(".article-category").text(article.category);
         newArticle.find(".article-author").text(article.author);
@@ -28,7 +29,8 @@ $.get("/api/saved", function (data, err) {
 $(document).on("click", ".view-comments-btn", function () {
     console.log("view comments button clicked");
     let id = $(this).closest("article").attr("data-id");
-    $("#commentsModalTitle").text("Comments for " + id);
+    let headline = $(this).closest("article").attr("data-headline");
+    $("#commentsModalTitle").text(`Comments for "${headline}"`);
     $("#save-comment-btn").attr("data-id", id);
 
     loadComments(id);
@@ -53,7 +55,7 @@ function loadComments(id) {
                 .attr("data-id", comment._id);
             let commentDate = new Date(parseInt(comment.date));
             console.log(commentDate.toString());
-            newComment.children("p").html(`<b>[${formatDate(commentDate)}]</b> ${comment.body}`)
+            newComment.children("p").html(`<span>${formatDate(commentDate)}</span> ${comment.body}`)
             newComment.children(".delete-comment-btn").hide();
             $("#comments-list").append(newComment);
         });
@@ -61,7 +63,7 @@ function loadComments(id) {
 }
 
 function formatDate(date) {
-    return `${date.getMonth()}.${date.getDate()}.${1900 + date.getYear()}, ${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}`;
+    return `${date.getMonth()}.${date.getDate()}.${1900 + date.getYear()}, ${date.getHours()%12 || 12}:${String(date.getMinutes()).padStart(2, '0')}${date.getHours()<12 ? "am" : "pm"}`;
 }
 
 $("#save-comment-btn").click(function () {
@@ -112,6 +114,6 @@ $(document).on("click", "i", function () {
         data: { favorite: !isFav }
     }).done(data => {
         // remove article from Favorites page
-        $(this).closest(".col").remove();
+        $(this).closest(".article-col").remove();
     });
 });
