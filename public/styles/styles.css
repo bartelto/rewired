@@ -34,7 +34,7 @@ p, button, a {
 }
 
 /* "favorite" heart */
-i { 
+i.fa-heart { 
     position: absolute;
     right: 10px;
     top: 10px;
@@ -43,7 +43,7 @@ i {
     text-shadow: 0 0 3px dimgray;
 }
 
-.read-article-btn 
+.read-article-btn, 
 .view-comments-btn {
     margin-bottom: 0.5em;
 }
@@ -80,10 +80,11 @@ i {
 
 .delete-comment-btn {
     position: absolute;
-    top: 0;
-    right: 0;
-    color: white;
-    background-color: firebrick;
+    top: 11px;
+    right: 5px;
+    color: firebrick;
     border-radius: 5px;
+    display: block;
+    size: 24px;
 }
 
