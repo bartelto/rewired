@@ -24,9 +24,9 @@ $.get("/api/saved", function (data, err) {
     });
 });
 
-// click event for "add comment" button
+// click event for "view comments" button on an article
 $(document).on("click", ".view-comments-btn", function () {
-    console.log("comment button clicked");
+    console.log("view comments button clicked");
     let id = $(this).closest("article").attr("data-id");
     $("#commentsModalTitle").text("Comments for " + id);
     $("#save-comment-btn").attr("data-id", id);
@@ -44,7 +44,7 @@ function loadComments(id) {
         if (err) {
             console.log(err);
         }
-        console.log(data);
+        //console.log(data);
         data.comments.forEach(comment => {
             console.log(comment.date);
             let newComment = $("#comment-template").clone()
@@ -91,16 +91,18 @@ $(document).on("click", ".delete-comment-btn", function () {
     });
 });
 
+// show delete button on comment mouseover
 $(document).on("mouseover", ".comment", function () {
     $(this).children(".delete-comment-btn").show();
 });
 
+// hide delete button on comment when mouse leaves
 $(document).on("mouseleave", ".comment", function () {
     $(this).children(".delete-comment-btn").hide();
 });
 
 // click event for fav heart on each article
-// all articles here are favorites, so we will be un-favoriting it here
+// all articles on this page are favorites, so we will be un-favoriting it here
 $(document).on("click", "i", function () {
     let id = $(this).closest("article").attr("data-id");
     let isFav = true;
@@ -110,6 +112,6 @@ $(document).on("click", "i", function () {
         data: { favorite: !isFav }
     }).done(data => {
         // remove article from Favorites page
-        $(this).closest("article").remove();
+        $(this).closest(".col").remove();
     });
 });
