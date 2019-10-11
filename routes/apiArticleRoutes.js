@@ -33,18 +33,24 @@ module.exports = function (app) {
           .find(".card-component__description")
           .children("a")
           .attr("href");
-        result.author = $(this)
-          .find(".card-component__description")
-          .find(".byline-component")
-          .find("a")
-          .text();
         result.image = $(this)
           .find(".card-component__image")
           .find("img")
           .attr("src");
 
+        // author requires special handling, since there could be more than one
+        let authorArray = [];
+        $(this)
+          .find(".card-component__description")
+          .find(".byline-component")
+          .find("a")
+          .each(function(index, obj) {
+            authorArray.push($(this).text());
+          })
+        result.author = authorArray.join(" & ");
 
-        console.log(result);
+        //console.log(result);
+
         // Create a new Article using the `result` object built from scraping
         db.Article.create(result)
           .then(function (dbArticle) {
