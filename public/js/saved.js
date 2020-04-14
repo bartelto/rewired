@@ -63,7 +63,7 @@ function loadComments(id) {
 }
 
 function formatDate(date) {
-    return moment().format('M.D.YYYY, h:mma'); 
+    return moment(date).format('M.D.YYYY, h:mma'); 
 }
 
 $("#save-comment-btn").click(function () {
