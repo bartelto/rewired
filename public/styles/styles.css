@@ -15,6 +15,7 @@
     background-position: center center;
     color: white;
     margin-top: 56px;
+    text-shadow: 3px 3px 6px black;
 }
 
 h1, h2, h3, h4, h5 {

@@ -46,7 +46,7 @@ module.exports = function (app) {
           .find("a")
           .each(function(index, obj) {
             authorArray.push($(this).text());
-          })
+          });
         result.author = authorArray.join(" & ");
 
         //console.log(result);

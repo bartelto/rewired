@@ -63,7 +63,7 @@ function loadComments(id) {
 }
 
 function formatDate(date) {
-    return `${date.getMonth()}.${date.getDate()}.${1900 + date.getYear()}, ${date.getHours()%12 || 12}:${String(date.getMinutes()).padStart(2, '0')}${date.getHours()<12 ? "am" : "pm"}`;
+    return moment().format('M.D.YYYY, h:mma'); 
 }
 
 $("#save-comment-btn").click(function () {
