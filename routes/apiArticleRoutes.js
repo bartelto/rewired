@@ -69,6 +69,7 @@ module.exports = function (app) {
 
       // Grab every document in the Articles collection
       db.Article.find({})
+        .sort({dateAdded: 'desc'})
         .then(function (dbArticle) {
           // If we were able to successfully find Articles, send them back to the client
           res.json(dbArticle);
@@ -84,6 +85,7 @@ module.exports = function (app) {
   app.get("/api/saved", function (req, res) {
     // Grab every document in the Articles collection
     db.Article.find({ favorite: true })
+      .sort({dateAdded: 'desc'})
       .then(function (dbArticle) {
         // If we were able to successfully find Articles, send them back to the client
         res.json(dbArticle);
