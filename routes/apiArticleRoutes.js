@@ -52,16 +52,21 @@ module.exports = function (app) {
 
         //console.log(result);
 
-        // Create a new Article using the `result` object built from scraping
-        db.Article.create(result)
-          .then(function (dbArticle) {
-            // View the added result in the console
-            console.log(dbArticle);
-          })
+        db.Article.findOne({ url: result.url })
           .catch(function (err) {
-            // If an error occurred, log it
-            console.log(err);
+            // If an error occurred, no matching Articles were found.
+            // Create a new Article using the `result` object built from scraping
+            db.Article.create(result)
+              .then(function (dbArticle) {
+                // View the added result in the console
+                console.log(dbArticle);
+              })
+              .catch(function (err) {
+                // If an error occurred, log it
+                console.log(err);
+              });
           });
+
       });
 
       // Send a message to the client
