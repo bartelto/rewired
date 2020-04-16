@@ -37,6 +37,7 @@ module.exports = function (app) {
           .find(".card-component__image")
           .find("img")
           .attr("src");
+        result.dateAdded = Date();
 
         // author requires special handling, since there could be more than one
         let authorArray = [];

@@ -44,7 +44,12 @@ var ArticleSchema = new Schema({
   comments: [{
     type: Schema.Types.ObjectId,
     ref: "Comment"
-  }]
+  }],
+  // `dateAdded` is required and of type Date
+  dateAdded: {
+    type: Date,
+    required: true
+  }
 });
 
 // This creates our model from the above schema, using mongoose's model method
